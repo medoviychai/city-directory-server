@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require("cors");
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,6 +26,21 @@ app.get('/cities', (req, res) => {
     res.json(data);
   })
 })
+
+const corsOpts = {
+   origin: '*',
+ 
+   methods: [
+     'GET',
+     'POST',
+   ],
+ 
+   allowedHeaders: [
+     'Content-Type',
+   ],
+ };
+ 
+ app.use(cors(corsOpts));
 
 // app.get('/arr', (req, res) => {
 //   // connection.connect(function (err) {
