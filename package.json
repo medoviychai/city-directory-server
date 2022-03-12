@@ -1,0 +1,23 @@
+{
+  "name": "city-directory-server",
+  "version": "1.0.0",
+  "description": "server for project city directory",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/medoviychai/city-directory-server.git"
+  },
+  "author": "Mari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/medoviychai/city-directory-server/issues"
+  },
+  "homepage": "https://github.com/medoviychai/city-directory-server#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mysql": "^2.18.1"
+  }
+}
