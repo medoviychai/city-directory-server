@@ -19,14 +19,6 @@ connection.connect((err) => {
   }
 });
 
-app.get('/cities', (req, res) => {
-   connection.query('SELECT * FROM listOfCities;', 
-  (err, data) => {
-    if (err) return res.status(500);
-    res.json(data);
-  })
-})
-
 const corsOpts = {
    origin: '*',
  
@@ -41,6 +33,33 @@ const corsOpts = {
  };
  
  app.use(cors(corsOpts));
+
+app.get('/cities', (req, res) => {
+   connection.query('SELECT * FROM listOfCities;', 
+  (err, data) => {
+    if (err) return res.status(500);
+    res.json(data);
+  })
+})
+
+app.get('/cities/:id', (req, res) => {
+   connection.query(`SELECT id, name, logo, image, description, population, average_salary, air_temperature_winter, air_temperature_summer, ap_price_meter, fuel_cost, unemployment_rate, top_position, bus_ticket FROM listOfCities WHERE id = ${req.params.id};`, 
+   (err, data) => {
+     if (err) return res.status(500);
+     res.json(data);
+   })
+ });
+
+ app.get('/countofcities', function (req, res) {
+   const count = parseInt(req.query.count);
+   const offset = parseInt(req.query.offset);
+   connection.query(`SELECT * FROM listOfCities;`, 
+   (err, data) => {
+     if (err) return res.status(500);
+     res.send({ data: data.slice(offset, offset + count), count: data.length });
+   })   
+ });
+
 
 // app.get('/arr', (req, res) => {
 //   // connection.connect(function (err) {
@@ -98,58 +117,7 @@ const corsOpts = {
 //   })
 // });
 
-// app.get('/task/:id', (req, res) => {
-//   connection.query(`SELECT ID, TaskDescription, DueDate, Employee, FinishedDate FROM tasksList WHERE ID = ${req.params.id};`, 
-//   (err, data) => {
-//     if (err) return res.status(500);
-//     res.json(data);
-//   })
-// });
-
-
-// const arr = [
-//   {
-//     id: 1,
-//     description: "create ER-diagram",
-//     due: "2020-05-20",
-//     employee: "Alex",
-//     finished: "2019-05-20",
-//   },
-//   {
-//     id: 2,
-//     description: "connect node.js to mysql",
-//     due: "2013-05-20",
-//     employee: "John",
-//     finished: "2017-05-20",
-//   },
-//   {
-//     id: 3,
-//     description: "create get-request handler /task",
-//     employee: "Alex",
-//     finished: "2015-04-20",
-//   },
-//   {
-//     id: 4,
-//     description: "create post-request handler /task",
-//     due: "2005-04-20",
-//     employee: "Donald",
-//   },
-//   { id: 5, description: "create sql-query for get tasks", employee: "John" },
-//   {
-//     id: 6,
-//     description: "create sql-query for add task",
-//     due: "2004-03-20",
-//     employee: "Martin",
-//     finished: "2004-03-20",
-//   },
-//   { id: 7, 
-//     description: "configure server to auto deploy", 
-//     due: "2012-03-20" },
-// ];
-
-
 // app.get('/tasklistadd', function (req, res) {
-
 //   arr.forEach(item => {
 //       console.log(item.due);
 //       connection.query(`INSERT INTO tasksList (TaskDescription, DueDate, Employee, FinishedDate)
